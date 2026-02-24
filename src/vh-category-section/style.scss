@@ -5,6 +5,10 @@
   initial-value: transparent;
 }
 
+.wp-block-create-block-vh-category-section {
+  margin-block-start: 3rem;
+}
+
 .vh-category-section__title-row {
   display: grid;
   grid-template: 'title link' auto / 1fr auto;
