@@ -10,56 +10,6 @@ import {
 import { useSelect } from '@wordpress/data';
 import { store as coreDataStore } from '@wordpress/core-data';
 
-import './editor.scss';
-
-function SkeletonCard() {
-	return (
-		<div className="vh-cs__card vh-cs__card--skeleton">
-			<div className="vh-cs__card-thumb vh-cs__skel-block" />
-			<div className="vh-cs__card-body">
-				<div className="vh-cs__skel-line vh-cs__skel-line--xs" />
-				<div className="vh-cs__skel-line vh-cs__skel-line--lg" />
-				<div className="vh-cs__skel-line vh-cs__skel-line--md" />
-				<div className="vh-cs__skel-line vh-cs__skel-line--sm" />
-			</div>
-		</div>
-	);
-}
-
-function ThumbPlaceholder() {
-	return (
-		<svg
-			className="vh-cs__card-thumb-icon"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="1"
-			aria-hidden="true"
-		>
-			<rect x="3" y="3" width="18" height="18" rx="2" />
-			<circle cx="8.5" cy="8.5" r="1.5" />
-			<path d="M21 15l-5-5L5 21" />
-		</svg>
-	);
-}
-
-function ArrowIcon() {
-	return (
-		<svg
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="2"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-			aria-hidden="true"
-		>
-			<line x1="5" y1="12" x2="19" y2="12" />
-			<polyline points="12 5 19 12 12 19" />
-		</svg>
-	);
-}
-
 export default function Edit( { attributes, setAttributes } ) {
 	const { categoryId, postsCount, buttonText } = attributes;
 
@@ -124,10 +74,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					initialOpen={ true }
 				>
 					{ ! categories ? (
-						<div className="vh-cs__inspector-loading">
-							<Spinner />
-							<span>{ __( 'Loading categories…', 'vh-wp-blocks' ) }</span>
-						</div>
+						<Spinner />
 					) : (
 						<SelectControl
 							label={ __( 'Category', 'vh-wp-blocks' ) }
@@ -158,94 +105,60 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<section { ...blockProps }>
-				<div className="vh-cs__inner">
-					{ /* ── Header ── */ }
-					<header className="vh-cs__header">
-						<div className="vh-cs__eyebrow">
-							<span>{ __( 'Featured', 'vh-wp-blocks' ) }</span>
-						</div>
-						{ selectedCategory ? (
-							<>
-								<p className="vh-cs__category-label">
-									{ __( 'Category', 'vh-wp-blocks' ) }
-								</p>
-								<h2 className="vh-cs__title">
-									{ selectedCategory.name }
-								</h2>
-								{ selectedCategory.description && (
-									<p className="vh-cs__description">
-										{ selectedCategory.description }
-									</p>
-								) }
-							</>
-						) : (
-							<>
-								<div className="vh-cs__skel-line vh-cs__skel-line--label" />
-								<div className="vh-cs__skel-line vh-cs__skel-line--title" />
-							</>
-						) }
-					</header>
-
-					{ /* ── Grid ── */ }
-					{ isEmpty ? (
-						<p className="vh-cs__empty">
-							{ __( 'No posts found in this category.', 'vh-wp-blocks' ) }
-						</p>
-					) : (
-						<div className="vh-cs__grid">
-							{ isReady
-								? posts.map( ( post ) => (
-										<article key={ post.id } className="vh-cs__card">
-											<div className="vh-cs__card-thumb">
-												{ featuredImages[ post.id ] ? (
-													<img
-														className="vh-cs__card-img"
-														src={ featuredImages[ post.id ] }
-														alt={ post.title?.rendered ?? '' }
-													/>
-												) : (
-													<ThumbPlaceholder />
-												) }
-											</div>
-											<div className="vh-cs__card-body">
-												<time className="vh-cs__card-date">
-													{ new Date(
-														post.date
-													).toLocaleDateString( 'en-US', {
-														month: 'short',
-														day: 'numeric',
-														year: 'numeric',
-													} ) }
-												</time>
-												<h3
-													className="vh-cs__card-title"
-													dangerouslySetInnerHTML={ {
-														__html: post.title?.rendered ?? '',
-													} }
-												/>
-												<div
-													className="vh-cs__card-excerpt"
-													dangerouslySetInnerHTML={ {
-														__html: post.excerpt?.rendered ?? '',
-													} }
-												/>
-											</div>
-										</article>
-								  ) )
-								: Array.from( { length: postsCount }, ( _, i ) => (
-										<SkeletonCard key={ i } />
-								  ) ) }
-						</div>
+				<header>
+					{ selectedCategory && (
+						<>
+							<h2>{ selectedCategory.name }</h2>
+							{ selectedCategory.description && (
+								<p>{ selectedCategory.description }</p>
+							) }
+						</>
 					) }
+				</header>
 
-					{ /* ── CTA preview ── */ }
-					<footer className="vh-cs__footer">
-						<div className="vh-cs__cta vh-cs__cta--preview">
-							<span>{ buttonText || __( 'View all posts', 'vh-wp-blocks' ) }</span>
-							<ArrowIcon />
-						</div>
-					</footer>
-				</div>
+				{ isEmpty && (
+					<p>{ __( 'No posts found in this category.', 'vh-wp-blocks' ) }</p>
+				) }
+
+				{ ! isEmpty && (
+					<div>
+						{ isReady ? (
+							posts.map( ( post ) => (
+								<article key={ post.id }>
+									{ featuredImages[ post.id ] && (
+										<img
+											src={ featuredImages[ post.id ] }
+											alt={ post.title?.rendered ?? '' }
+										/>
+									) }
+									<time>
+										{ new Date( post.date ).toLocaleDateString( 'en-US', {
+											month: 'short',
+											day: 'numeric',
+											year: 'numeric',
+										} ) }
+									</time>
+									<h3
+										dangerouslySetInnerHTML={ {
+											__html: post.title?.rendered ?? '',
+										} }
+									/>
+									<div
+										dangerouslySetInnerHTML={ {
+											__html: post.excerpt?.rendered ?? '',
+										} }
+									/>
+								</article>
+							) )
+						) : (
+							<Spinner />
+						) }
+					</div>
+				) }
+
+				<footer>
+					<span>{ buttonText || __( 'View all posts', 'vh-wp-blocks' ) }</span>
+				</footer>
 			</section>
 		</>
 	);
