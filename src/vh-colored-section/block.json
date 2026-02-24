@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/vh-colored-section",
+  "version": "0.1.2",
+  "title": "VH Colored Section",
+  "category": "design",
+  "icon": "color-picker",
+  "description": "A section wrapper with a customizable background color.",
+  "supports": {
+    "html": false,
+    "align": [ "wide", "full" ]
+  },
+  "textdomain": "vh-wp-blocks",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
+}
