@@ -55,7 +55,7 @@ $chevron_svg        = file_get_contents( __DIR__ . '/assets/chevron-right.svg' )
         class="vh-category-section__view-all"
       >
         <span>
-          Ver Todos
+          <?php echo esc_html( $button_text ); ?>
         </span>
         <?php echo $chevron_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
       </a>

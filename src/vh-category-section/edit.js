@@ -128,7 +128,7 @@ export default function Edit( { attributes, setAttributes } ) {
               { selectedCategory?.name }
             </h2>
             <span className="vh-category-section__view-all">
-              <span>Ver Todos</span>
+              <span>{ buttonText }</span>
             </span>
           </div>
           <hr className="vh-category-section__line" />
