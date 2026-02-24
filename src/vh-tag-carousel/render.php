@@ -58,17 +58,17 @@ $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'vh-tag-ca
           </div>
         </a>
         <div class="vh-tag-carousel__card-body">
+          <h3 class="vh-tag-carousel__card-title">
+            <a href="<?php echo esc_url( $permalink ); ?>">
+              <?php echo esc_html( get_the_title( $post ) ); ?>
+            </a>
+          </h3>
           <time
             class="vh-tag-carousel__card-date"
             datetime="<?php echo esc_attr( $date_iso ); ?>"
           >
             <?php echo esc_html( $date_fmt ); ?>
           </time>
-          <h3 class="vh-tag-carousel__card-title">
-            <a href="<?php echo esc_url( $permalink ); ?>">
-              <?php echo esc_html( get_the_title( $post ) ); ?>
-            </a>
-          </h3>
         </div>
       </article>
       <?php endforeach; ?>
