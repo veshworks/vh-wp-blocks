@@ -6,12 +6,13 @@ import {
 	RangeControl,
 	TextControl,
 	Spinner,
+	ColorPalette,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { store as coreDataStore } from '@wordpress/core-data';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { categoryId, postsCount, buttonText } = attributes;
+	const { categoryId, postsCount, buttonText, categoryColor } = attributes;
 
 	const categories = useSelect( ( select ) => {
 		return select( coreDataStore ).getEntityRecords( 'taxonomy', 'category', {
@@ -64,7 +65,10 @@ export default function Edit( { attributes, setAttributes } ) {
 	const isReady = !! categoryId && Array.isArray( posts ) && posts.length > 0;
 	const isEmpty = !! categoryId && Array.isArray( posts ) && posts.length === 0;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps( {
+		style: categoryColor ? { '--category-color': categoryColor } : undefined,
+		className: categoryColor ? 'vh-category-section--has-color' : undefined,
+	} );
 
 	return (
 		<>
@@ -100,6 +104,19 @@ export default function Edit( { attributes, setAttributes } ) {
 						label={ __( 'Button text', 'vh-wp-blocks' ) }
 						value={ buttonText }
 						onChange={ ( val ) => setAttributes( { buttonText: val } ) }
+					/>
+				</PanelBody>
+				<PanelBody
+					title={ __( 'Appearance', 'vh-wp-blocks' ) }
+					initialOpen={ false }
+				>
+					<ColorPalette
+						label={ __( 'Category color', 'vh-wp-blocks' ) }
+						colors={ categoryColor ? [ { name: __( 'Category color', 'vh-wp-blocks' ), color: categoryColor } ] : [] }
+						value={ categoryColor }
+						onChange={ ( val ) =>
+							setAttributes( { categoryColor: val ?? '' } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>

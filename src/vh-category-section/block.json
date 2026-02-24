@@ -24,6 +24,10 @@
 		"buttonText": {
 			"type": "string",
 			"default": "View all posts"
+		},
+		"categoryColor": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"textdomain": "vh-wp-blocks",
