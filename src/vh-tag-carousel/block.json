@@ -1,17 +1,17 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/vh-category-section",
+  "name": "create-block/vh-tag-carousel",
   "version": "0.1.1",
-  "title": "VH Category Section",
+  "title": "VH Tag Carousel",
   "category": "widgets",
-  "icon": "category",
-  "description": "Display posts from a selected category with a link to the category archive.",
+  "icon": "slides",
+  "description": "Display posts filtered by tags in an infinite auto-scrolling carousel.",
   "keywords": [
-    "category",
+    "carousel",
     "posts",
-    "archive",
-    "grid"
+    "tags",
+    "slider"
   ],
   "supports": {
     "html": false,
@@ -21,26 +21,22 @@
     ]
   },
   "attributes": {
-    "categoryId": {
-      "type": "integer",
-      "default": 0
+    "tagIds": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "default": []
     },
     "postsCount": {
       "type": "integer",
-      "default": 3
-    },
-    "buttonText": {
-      "type": "string",
-      "default": "View all posts"
-    },
-    "categoryColor": {
-      "type": "string",
-      "default": ""
+      "default": 6
     }
   },
   "textdomain": "vh-wp-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
+  "viewScript": "file:./view.js",
   "render": "file:./render.php"
 }

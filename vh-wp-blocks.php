@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       VH WP Blocks
  * Description:       A collection of custom Gutenberg blocks for editorial and content-rich WordPress sites.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 6.8
  * Requires PHP:      7.4
  * Author:            vhoyer

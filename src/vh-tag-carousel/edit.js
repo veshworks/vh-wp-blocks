@@ -1,0 +1,155 @@
+import './editor.scss';
+
+import { __ } from '@wordpress/i18n';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+  PanelBody,
+  CheckboxControl,
+  RangeControl,
+  Spinner,
+} from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+
+export default function Edit( { attributes, setAttributes } ) {
+  const { tagIds, postsCount } = attributes;
+  const tagIdsKey = tagIds.join( ',' );
+
+  const { tags, isLoadingTags } = useSelect( ( select ) => {
+    const store = select( 'core' );
+    const query = { per_page: 100, hide_empty: true };
+    return {
+      tags: store.getEntityRecords( 'taxonomy', 'post_tag', query ),
+      isLoadingTags: store.isResolving( 'getEntityRecords', [
+        'taxonomy',
+        'post_tag',
+        query,
+      ] ),
+    };
+  }, [] );
+
+  const { posts, isLoadingPosts } = useSelect(
+    ( select ) => {
+      const store = select( 'core' );
+      const query = {
+        per_page: postsCount,
+        _embed: true,
+        ...( tagIds.length > 0 ? { tags: tagIds } : {} ),
+      };
+      return {
+        posts: store.getEntityRecords( 'postType', 'post', query ),
+        isLoadingPosts: store.isResolving( 'getEntityRecords', [
+          'postType',
+          'post',
+          query,
+        ] ),
+      };
+    },
+    [ tagIdsKey, postsCount ]
+  );
+
+  const blockProps = useBlockProps( { className: 'vh-tag-carousel' } );
+
+  const toggleTag = ( tagId, checked ) => {
+    setAttributes( {
+      tagIds: checked
+        ? [ ...tagIds, tagId ]
+        : tagIds.filter( ( id ) => id !== tagId ),
+    } );
+  };
+
+  return (
+    <>
+      <InspectorControls>
+        <PanelBody title={ __( 'Filter by Tags', 'vh-wp-blocks' ) }>
+          { isLoadingTags ? (
+            <Spinner />
+          ) : tags && tags.length > 0 ? (
+            tags.map( ( tag ) => (
+              <CheckboxControl
+                key={ tag.id }
+                label={ `${ tag.name } (${ tag.count })` }
+                checked={ tagIds.includes( tag.id ) }
+                onChange={ ( checked ) => toggleTag( tag.id, checked ) }
+              />
+            ) )
+          ) : (
+            <p>{ __( 'No tags found.', 'vh-wp-blocks' ) }</p>
+          ) }
+        </PanelBody>
+        <PanelBody title={ __( 'Settings', 'vh-wp-blocks' ) }>
+          <RangeControl
+            label={ __( 'Number of posts', 'vh-wp-blocks' ) }
+            value={ postsCount }
+            onChange={ ( value ) => setAttributes( { postsCount: value } ) }
+            min={ 2 }
+            max={ 12 }
+          />
+        </PanelBody>
+      </InspectorControls>
+
+      <div { ...blockProps }>
+        <div className="vh-tag-carousel__editor-track">
+          { isLoadingPosts ? (
+            <div className="vh-tag-carousel__loading">
+              <Spinner />
+            </div>
+          ) : posts && posts.length > 0 ? (
+            posts.map( ( post ) => {
+              const media =
+                post._embedded?.[ 'wp:featuredmedia' ]?.[ 0 ];
+              const imageUrl =
+                media?.media_details?.sizes?.medium?.source_url ||
+                media?.source_url;
+              const imageAlt = media?.alt_text || '';
+              const date = new Date( post.date );
+              const formattedDate = date.toLocaleDateString( 'en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              } );
+
+              return (
+                <article key={ post.id } className="vh-tag-carousel__card">
+                  <div className="vh-tag-carousel__card-thumb">
+                    { imageUrl ? (
+                      <img
+                        src={ imageUrl }
+                        alt={ imageAlt }
+                        className="vh-tag-carousel__card-img"
+                      />
+                    ) : (
+                      <div className="vh-tag-carousel__card-placeholder" />
+                    ) }
+                  </div>
+                  <div className="vh-tag-carousel__card-body">
+                    <time className="vh-tag-carousel__card-date">
+                      { formattedDate }
+                    </time>
+                    <h3
+                      className="vh-tag-carousel__card-title"
+                      dangerouslySetInnerHTML={ {
+                        __html: post.title.rendered,
+                      } }
+                    />
+                  </div>
+                </article>
+              );
+            } )
+          ) : (
+            <p className="vh-tag-carousel__empty">
+              { tagIds.length === 0
+                ? __(
+                    'Select tags in the sidebar to filter posts.',
+                    'vh-wp-blocks'
+                  )
+                : __(
+                    'No posts found for the selected tags.',
+                    'vh-wp-blocks'
+                  ) }
+            </p>
+          ) }
+        </div>
+      </div>
+    </>
+  );
+}
