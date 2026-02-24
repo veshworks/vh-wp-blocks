@@ -65,6 +65,7 @@ $chevron_svg        = file_get_contents( __DIR__ . '/assets/chevron-right.svg' )
 
   <div class="vh-category-section__post-list">
     <?php foreach ( $posts as $post ) :
+      setup_postdata( $post );
       $post_id   = $post->ID;
       $title     = get_the_title( $post_id );
       $permalink = get_permalink( $post_id );
@@ -103,7 +104,8 @@ $chevron_svg        = file_get_contents( __DIR__ . '/assets/chevron-right.svg' )
         <?php endif; ?>
       </div>
     </article>
-    <?php endforeach; ?>
+    <?php endforeach;
+    wp_reset_postdata(); ?>
   </div>
 
 </section>
