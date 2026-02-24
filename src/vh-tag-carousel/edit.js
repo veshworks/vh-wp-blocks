@@ -88,66 +88,75 @@ export default function Edit( { attributes, setAttributes } ) {
       </InspectorControls>
 
       <div { ...blockProps }>
-        <div className="vh-tag-carousel__editor-track">
-          { isLoadingPosts ? (
-            <div className="vh-tag-carousel__loading">
-              <Spinner />
-            </div>
-          ) : posts && posts.length > 0 ? (
-            posts.map( ( post ) => {
-              const media =
-                post._embedded?.[ 'wp:featuredmedia' ]?.[ 0 ];
-              const imageUrl =
-                media?.media_details?.sizes?.medium?.source_url ||
-                media?.source_url;
-              const imageAlt = media?.alt_text || '';
-              const date = new Date( post.date );
-              const formattedDate = date.toLocaleDateString( 'en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-              } );
+        <div className="vh-tag-carousel__viewport">
+          <div className="vh-tag-carousel__track">
+            { isLoadingPosts ? (
+              <div className="vh-tag-carousel__loading">
+                <Spinner />
+              </div>
+            ) : posts && posts.length > 0 ? (
+              posts.map( ( post ) => {
+                const media =
+                  post._embedded?.[ 'wp:featuredmedia' ]?.[ 0 ];
+                const imageUrl =
+                  media?.media_details?.sizes?.medium?.source_url ||
+                  media?.source_url;
+                const imageAlt = media?.alt_text || '';
+                const date = new Date( post.date );
+                const formattedDate = date.toLocaleDateString( 'en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                } );
 
-              return (
-                <article key={ post.id } className="vh-tag-carousel__card">
-                  <div className="vh-tag-carousel__card-thumb">
-                    { imageUrl ? (
-                      <img
-                        src={ imageUrl }
-                        alt={ imageAlt }
-                        className="vh-tag-carousel__card-img"
-                      />
-                    ) : (
-                      <div className="vh-tag-carousel__card-placeholder" />
+                return (
+                  <article key={ post.id } className="vh-tag-carousel__card">
+                    <a
+                      className="vh-tag-carousel__card-link"
+                      tabIndex={ -1 }
+                      aria-hidden="true"
+                    >
+                      <div className="vh-tag-carousel__card-thumb">
+                        { imageUrl ? (
+                          <img
+                            src={ imageUrl }
+                            alt={ imageAlt }
+                            className="vh-tag-carousel__card-img"
+                          />
+                        ) : (
+                          <div className="vh-tag-carousel__card-placeholder" />
+                        ) }
+                      </div>
+                    </a>
+                    <div className="vh-tag-carousel__card-body">
+                      <h3 className="vh-tag-carousel__card-title">
+                        <a
+                          dangerouslySetInnerHTML={ {
+                            __html: post.title.rendered,
+                          } }
+                        />
+                      </h3>
+                      <time className="vh-tag-carousel__card-date">
+                        { formattedDate }
+                      </time>
+                    </div>
+                  </article>
+                );
+              } )
+            ) : (
+              <p className="vh-tag-carousel__empty">
+                { tagIds.length === 0
+                  ? __(
+                      'Select tags in the sidebar to filter posts.',
+                      'vh-wp-blocks'
+                    )
+                  : __(
+                      'No posts found for the selected tags.',
+                      'vh-wp-blocks'
                     ) }
-                  </div>
-                  <div className="vh-tag-carousel__card-body">
-                    <time className="vh-tag-carousel__card-date">
-                      { formattedDate }
-                    </time>
-                    <h3
-                      className="vh-tag-carousel__card-title"
-                      dangerouslySetInnerHTML={ {
-                        __html: post.title.rendered,
-                      } }
-                    />
-                  </div>
-                </article>
-              );
-            } )
-          ) : (
-            <p className="vh-tag-carousel__empty">
-              { tagIds.length === 0
-                ? __(
-                    'Select tags in the sidebar to filter posts.',
-                    'vh-wp-blocks'
-                  )
-                : __(
-                    'No posts found for the selected tags.',
-                    'vh-wp-blocks'
-                  ) }
-            </p>
-          ) }
+              </p>
+            ) }
+          </div>
         </div>
       </div>
     </>
