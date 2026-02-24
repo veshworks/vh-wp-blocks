@@ -1,2 +1,18 @@
 .vh-colored-section {
+  margin: 0;
+  padding-block: 32px 48px;
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    background-color: #f8f9fa;
+    width: 100vw;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    transform: translateX(-50%);
+    z-index: -1;
+  }
 }
