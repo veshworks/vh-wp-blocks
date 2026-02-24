@@ -35,3 +35,8 @@ for ( const block of glob( srcDir ) ) {
 }
 
 console.log( `Version bumped to ${ newVersion }` );
+
+// Commit the version bump
+const { execSync } = require( 'child_process' );
+execSync( `git add package.json vh-wp-blocks.php src/`, { cwd: root, stdio: 'inherit' } );
+execSync( `git commit -m "🔖 Bump version to ${ newVersion }"`, { cwd: root, stdio: 'inherit' } );
