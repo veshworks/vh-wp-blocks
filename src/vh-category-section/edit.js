@@ -123,14 +123,15 @@ export default function Edit( { attributes, setAttributes } ) {
 
 			<section { ...blockProps }>
 				<header>
-					{ selectedCategory && (
-						<>
-							<h2>{ selectedCategory.name }</h2>
-							{ selectedCategory.description && (
-								<p>{ selectedCategory.description }</p>
-							) }
-						</>
-					) }
+					<div className="vh-category-section__title-row">
+						<h2 className="vh-category-section__title">
+							{ selectedCategory?.name }
+						</h2>
+						<a className="vh-category-section__view-all">
+							<span>Ver Todos</span>
+						</a>
+					</div>
+					<hr className="vh-category-section__line" />
 				</header>
 
 				{ isEmpty && (
@@ -138,33 +139,41 @@ export default function Edit( { attributes, setAttributes } ) {
 				) }
 
 				{ ! isEmpty && (
-					<div>
+					<div className="vh-category-section__post-list">
 						{ isReady ? (
 							posts.map( ( post ) => (
-								<article key={ post.id }>
+								<article key={ post.id } className="vh-category-section__article">
 									{ featuredImages[ post.id ] && (
-										<img
-											src={ featuredImages[ post.id ] }
-											alt={ post.title?.rendered ?? '' }
-										/>
+										<a href={ post.link }>
+											<img
+												src={ featuredImages[ post.id ] }
+												alt={ post.title?.rendered ?? '' }
+												className="vh-category-section__thumb"
+											/>
+										</a>
 									) }
-									<time>
-										{ new Date( post.date ).toLocaleDateString( 'en-US', {
-											month: 'short',
-											day: 'numeric',
-											year: 'numeric',
-										} ) }
-									</time>
-									<h3
-										dangerouslySetInnerHTML={ {
-											__html: post.title?.rendered ?? '',
-										} }
-									/>
-									<div
-										dangerouslySetInnerHTML={ {
-											__html: post.excerpt?.rendered ?? '',
-										} }
-									/>
+									<div className="vh-category-section__content">
+										<h3 className="vh-category-section__article-title">
+											<a
+												href={ post.link }
+												dangerouslySetInnerHTML={ {
+													__html: post.title?.rendered ?? '',
+												} }
+											/>
+										</h3>
+										<time className="vh-category-section__article-time">
+											{ new Date( post.date ).toLocaleDateString( 'en-US', {
+												month: 'short',
+												day: 'numeric',
+												year: 'numeric',
+											} ) }
+										</time>
+										{ post.excerpt?.rendered && (
+											<p dangerouslySetInnerHTML={ {
+												__html: post.excerpt.rendered,
+											} } />
+										) }
+									</div>
 								</article>
 							) )
 						) : (
@@ -172,10 +181,6 @@ export default function Edit( { attributes, setAttributes } ) {
 						) }
 					</div>
 				) }
-
-				<footer>
-					<span>{ buttonText || __( 'View all posts', 'vh-wp-blocks' ) }</span>
-				</footer>
 			</section>
 		</>
 	);
