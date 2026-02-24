@@ -1,8 +1,8 @@
 {
 	"name": "vh-wp-blocks",
 	"version": "0.1.0",
-	"description": "Example block scaffolded with Create Block tool.",
-	"author": "The WordPress Contributors",
+	"description": "A collection of custom Gutenberg blocks for editorial and content-rich WordPress sites.",
+	"author": "vhoyer",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
@@ -12,7 +12,9 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start --blocks-manifest"
+		"start": "wp-scripts start --blocks-manifest",
+		"env:start": "wp-env start",
+		"env:stop": "wp-env stop"
 	},
 	"dependencies": {
 		"@wordpress/block-editor": "latest",
@@ -20,6 +22,7 @@
 		"@wordpress/i18n": "latest"
 	},
 	"devDependencies": {
+		"@wordpress/env": "^10.39.0",
 		"@wordpress/scripts": "^31.5.0"
 	}
 }
