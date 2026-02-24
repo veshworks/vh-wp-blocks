@@ -127,9 +127,9 @@ export default function Edit( { attributes, setAttributes } ) {
 						<h2 className="vh-category-section__title">
 							{ selectedCategory?.name }
 						</h2>
-						<a className="vh-category-section__view-all">
+						<span className="vh-category-section__view-all">
 							<span>Ver Todos</span>
-						</a>
+						</span>
 					</div>
 					<hr className="vh-category-section__line" />
 				</header>
@@ -144,23 +144,19 @@ export default function Edit( { attributes, setAttributes } ) {
 							posts.map( ( post ) => (
 								<article key={ post.id } className="vh-category-section__article">
 									{ featuredImages[ post.id ] && (
-										<a href={ post.link }>
-											<img
-												src={ featuredImages[ post.id ] }
-												alt={ post.title?.rendered ?? '' }
-												className="vh-category-section__thumb"
-											/>
-										</a>
+										<img
+											src={ featuredImages[ post.id ] }
+											alt={ post.title?.rendered ?? '' }
+											className="vh-category-section__thumb"
+										/>
 									) }
 									<div className="vh-category-section__content">
-										<h3 className="vh-category-section__article-title">
-											<a
-												href={ post.link }
-												dangerouslySetInnerHTML={ {
-													__html: post.title?.rendered ?? '',
-												} }
-											/>
-										</h3>
+										<h3
+											className="vh-category-section__article-title"
+											dangerouslySetInnerHTML={ {
+												__html: post.title?.rendered ?? '',
+											} }
+										/>
 										<time className="vh-category-section__article-time">
 											{ new Date( post.date ).toLocaleDateString( 'en-US', {
 												month: 'short',
