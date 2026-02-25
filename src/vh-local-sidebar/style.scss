@@ -1,0 +1,16 @@
+.vh-local-sidebar {
+  container-type: inline-size;
+}
+
+@container (min-width: 600px) {
+  .vh-local-sidebar__layout {
+    display: grid;
+    grid-template-columns: 1fr var(--vh-sidebar-width, 33%);
+    align-items: start;
+  }
+}
+
+// In the editor, always display as stacked column regardless of container width.
+.editor-styles-wrapper .vh-local-sidebar__layout {
+  display: block;
+}

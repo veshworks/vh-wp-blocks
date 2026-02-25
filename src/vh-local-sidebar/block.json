@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/vh-local-sidebar",
+  "version": "0.1.10",
+  "title": "VH Local Sidebar",
+  "category": "design",
+  "icon": "columns",
+  "description": "Responsive two-column layout: main content and sidebar side-by-side when container is wide enough, stacked otherwise.",
+  "keywords": [
+    "sidebar",
+    "layout",
+    "columns",
+    "responsive"
+  ],
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "sidebarWidth": {
+      "type": "string",
+      "default": "33%"
+    }
+  },
+  "textdomain": "vh-wp-blocks",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
+}
