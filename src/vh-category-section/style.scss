@@ -54,7 +54,7 @@
 
 .vh-category-section__article {
   display: grid;
-  grid-template: 'thumb' auto 'content' auto / auto;
+  grid-template: 'thumb' auto 'content' auto / minmax(0, 1fr);
   gap: 16px;
 
   @media screen and (width >= 768px) {
@@ -68,6 +68,7 @@
   aspect-ratio: 1.4;
   object-fit: cover;
   border-radius: 4px;
+  max-width: 100%;
 
   @media screen and (width >= 768px) {
     max-width: 280px;
