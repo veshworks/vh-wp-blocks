@@ -40,6 +40,14 @@
       "type": "boolean",
       "default": false
     },
+    "blockId": {
+      "type": "string",
+      "default": ""
+    },
+    "customCSS": {
+      "type": "string",
+      "default": ""
+    },
     "tagIds": {
       "type": "array",
       "items": {

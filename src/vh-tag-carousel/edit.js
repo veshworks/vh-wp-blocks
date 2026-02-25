@@ -9,12 +9,20 @@ import {
   RangeControl,
   SelectControl,
   Spinner,
+  TextareaControl,
   ToggleControl,
 } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
-export default function Edit( { attributes, setAttributes } ) {
-  const { filterMode, captionPosition, aspectRatio, showCategory, tagIds, postsCount } = attributes;
+export default function Edit( { attributes, setAttributes, clientId } ) {
+  const { filterMode, captionPosition, aspectRatio, showCategory, blockId, customCSS, tagIds, postsCount } = attributes;
+
+  useEffect( () => {
+    if ( blockId !== clientId ) {
+      setAttributes( { blockId: clientId } );
+    }
+  }, [] );
   const tagIdsKey = tagIds.join( ',' );
 
   const { tags, isLoadingTags } = useSelect( ( select ) => {
@@ -53,6 +61,7 @@ export default function Edit( { attributes, setAttributes } ) {
   const blockProps = useBlockProps( {
     className: 'vh-tag-carousel',
     style: { '--card-aspect-ratio': aspectRatio },
+    'data-block-id': clientId,
   } );
 
   const toggleTag = ( tagId, checked ) => {
@@ -65,6 +74,9 @@ export default function Edit( { attributes, setAttributes } ) {
 
   return (
     <>
+      { customCSS && (
+        <style>{ `[data-block-id="${ clientId }"] { ${ customCSS } }` }</style>
+      ) }
       <InspectorControls>
         <PanelBody title={ __( 'Settings', 'vh-wp-blocks' ) }>
           <RadioControl
@@ -105,6 +117,15 @@ export default function Edit( { attributes, setAttributes } ) {
             onChange={ ( value ) => setAttributes( { postsCount: value } ) }
             min={ 2 }
             max={ 12 }
+          />
+        </PanelBody>
+        <PanelBody title={ __( 'Custom CSS', 'vh-wp-blocks' ) } initialOpen={ false }>
+          <TextareaControl
+            value={ customCSS }
+            onChange={ ( value ) => setAttributes( { customCSS: value } ) }
+            placeholder={ `.vh-tag-carousel__card {\n  border-radius: 0;\n}` }
+            rows={ 8 }
+            help={ __( 'CSS is scoped to this block instance. Use .vh-tag-carousel as the root selector.', 'vh-wp-blocks' ) }
           />
         </PanelBody>
         { filterMode === 'tag' && (

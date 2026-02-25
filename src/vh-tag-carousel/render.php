@@ -3,6 +3,8 @@ $filter_mode      = isset( $attributes['filterMode'] ) ? $attributes['filterMode
 $caption_position = isset( $attributes['captionPosition'] ) ? $attributes['captionPosition'] : 'below';
 $aspect_ratio     = isset( $attributes['aspectRatio'] ) ? $attributes['aspectRatio'] : '4/3';
 $show_category = ! empty( $attributes['showCategory'] );
+$block_id      = isset( $attributes['blockId'] ) ? $attributes['blockId'] : '';
+$custom_css    = isset( $attributes['customCSS'] ) ? $attributes['customCSS'] : '';
 $tag_ids       = isset( $attributes['tagIds'] ) ? array_map( 'absint', $attributes['tagIds'] ) : array();
 $posts_count = isset( $attributes['postsCount'] ) ? absint( $attributes['postsCount'] ) : 6;
 
@@ -24,10 +26,14 @@ if ( empty( $posts ) ) {
 }
 
 $wrapper_attributes = get_block_wrapper_attributes( array(
-  'class' => 'vh-tag-carousel',
-  'style' => '--card-aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';',
+  'class'          => 'vh-tag-carousel',
+  'style'          => '--card-aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';',
+  'data-block-id'  => esc_attr( $block_id ),
 ) );
 ?>
+<?php if ( $block_id && $custom_css ) : ?>
+  <style>[data-block-id="<?php echo esc_attr( $block_id ); ?>"] { <?php echo wp_strip_all_tags( $custom_css ); ?> }</style>
+<?php endif; ?>
 <div <?php echo $wrapper_attributes; ?>>
   <div
     class="vh-tag-carousel__viewport"
