@@ -34,7 +34,7 @@
     "aspectRatio": {
       "type": "string",
       "default": "4/3",
-      "enum": ["4/3", "3/5"]
+      "enum": ["4/3", "4/5"]
     },
     "tagIds": {
       "type": "array",

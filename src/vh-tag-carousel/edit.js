@@ -89,7 +89,7 @@ export default function Edit( { attributes, setAttributes } ) {
             value={ aspectRatio }
             options={ [
               { label: __( 'Landscape (4:3)', 'vh-wp-blocks' ), value: '4/3' },
-              { label: __( 'Portrait (3:5)', 'vh-wp-blocks' ), value: '3/5' },
+              { label: __( 'Portrait (4:5)', 'vh-wp-blocks' ), value: '4/5' },
             ] }
             onChange={ ( value ) => setAttributes( { aspectRatio: value } ) }
           />
