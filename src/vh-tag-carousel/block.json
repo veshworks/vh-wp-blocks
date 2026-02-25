@@ -21,6 +21,11 @@
     ]
   },
   "attributes": {
+    "filterMode": {
+      "type": "string",
+      "default": "recent",
+      "enum": ["recent", "tag"]
+    },
     "tagIds": {
       "type": "array",
       "items": {

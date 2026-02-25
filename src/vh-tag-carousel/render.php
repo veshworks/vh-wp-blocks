@@ -1,4 +1,5 @@
 <?php
+$filter_mode = isset( $attributes['filterMode'] ) ? $attributes['filterMode'] : 'recent';
 $tag_ids     = isset( $attributes['tagIds'] ) ? array_map( 'absint', $attributes['tagIds'] ) : array();
 $posts_count = isset( $attributes['postsCount'] ) ? absint( $attributes['postsCount'] ) : 6;
 
@@ -9,7 +10,7 @@ $query_args = array(
   'order'          => 'DESC',
 );
 
-if ( ! empty( $tag_ids ) ) {
+if ( 'tag' === $filter_mode && ! empty( $tag_ids ) ) {
   $query_args['tag__in'] = $tag_ids;
 }
 

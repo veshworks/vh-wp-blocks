@@ -5,13 +5,14 @@ import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import {
   PanelBody,
   CheckboxControl,
+  RadioControl,
   RangeControl,
   Spinner,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
 export default function Edit( { attributes, setAttributes } ) {
-  const { tagIds, postsCount } = attributes;
+  const { filterMode, tagIds, postsCount } = attributes;
   const tagIdsKey = tagIds.join( ',' );
 
   const { tags, isLoadingTags } = useSelect( ( select ) => {
@@ -33,7 +34,7 @@ export default function Edit( { attributes, setAttributes } ) {
       const query = {
         per_page: postsCount,
         _embed: true,
-        ...( tagIds.length > 0 ? { tags: tagIds } : {} ),
+        ...( filterMode === 'tag' && tagIds.length > 0 ? { tags: tagIds } : {} ),
       };
       return {
         posts: store.getEntityRecords( 'postType', 'post', query ),
@@ -44,7 +45,7 @@ export default function Edit( { attributes, setAttributes } ) {
         ] ),
       };
     },
-    [ tagIdsKey, postsCount ]
+    [ filterMode, tagIdsKey, postsCount ]
   );
 
   const blockProps = useBlockProps( { className: 'vh-tag-carousel' } );
@@ -60,23 +61,16 @@ export default function Edit( { attributes, setAttributes } ) {
   return (
     <>
       <InspectorControls>
-        <PanelBody title={ __( 'Filter by Tags', 'vh-wp-blocks' ) }>
-          { isLoadingTags ? (
-            <Spinner />
-          ) : tags && tags.length > 0 ? (
-            tags.map( ( tag ) => (
-              <CheckboxControl
-                key={ tag.id }
-                label={ `${ tag.name } (${ tag.count })` }
-                checked={ tagIds.includes( tag.id ) }
-                onChange={ ( checked ) => toggleTag( tag.id, checked ) }
-              />
-            ) )
-          ) : (
-            <p>{ __( 'No tags found.', 'vh-wp-blocks' ) }</p>
-          ) }
-        </PanelBody>
         <PanelBody title={ __( 'Settings', 'vh-wp-blocks' ) }>
+          <RadioControl
+            label={ __( 'Post source', 'vh-wp-blocks' ) }
+            selected={ filterMode }
+            options={ [
+              { label: __( 'Most recent', 'vh-wp-blocks' ), value: 'recent' },
+              { label: __( 'Filter by tag', 'vh-wp-blocks' ), value: 'tag' },
+            ] }
+            onChange={ ( value ) => setAttributes( { filterMode: value } ) }
+          />
           <RangeControl
             label={ __( 'Number of posts', 'vh-wp-blocks' ) }
             value={ postsCount }
@@ -85,6 +79,24 @@ export default function Edit( { attributes, setAttributes } ) {
             max={ 12 }
           />
         </PanelBody>
+        { filterMode === 'tag' && (
+          <PanelBody title={ __( 'Filter by Tags', 'vh-wp-blocks' ) }>
+            { isLoadingTags ? (
+              <Spinner />
+            ) : tags && tags.length > 0 ? (
+              tags.map( ( tag ) => (
+                <CheckboxControl
+                  key={ tag.id }
+                  label={ `${ tag.name } (${ tag.count })` }
+                  checked={ tagIds.includes( tag.id ) }
+                  onChange={ ( checked ) => toggleTag( tag.id, checked ) }
+                />
+              ) )
+            ) : (
+              <p>{ __( 'No tags found.', 'vh-wp-blocks' ) }</p>
+            ) }
+          </PanelBody>
+        ) }
       </InspectorControls>
 
       <div { ...blockProps }>
@@ -138,13 +150,13 @@ export default function Edit( { attributes, setAttributes } ) {
               } )
             ) : (
               <p className="vh-tag-carousel__empty">
-                { tagIds.length === 0
+                { filterMode === 'tag' && tagIds.length === 0
                   ? __(
                       'Select tags in the sidebar to filter posts.',
                       'vh-wp-blocks'
                     )
                   : __(
-                      'No posts found for the selected tags.',
+                      'No posts found.',
                       'vh-wp-blocks'
                     ) }
               </p>
