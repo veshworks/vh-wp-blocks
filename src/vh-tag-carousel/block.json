@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "create-block/vh-tag-carousel",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "title": "VH Tag Carousel",
   "category": "widgets",
   "icon": "slides",
@@ -24,17 +24,26 @@
     "filterMode": {
       "type": "string",
       "default": "recent",
-      "enum": ["recent", "tag"]
+      "enum": [
+        "recent",
+        "tag"
+      ]
     },
     "captionPosition": {
       "type": "string",
       "default": "below",
-      "enum": ["below", "overlay"]
+      "enum": [
+        "below",
+        "overlay"
+      ]
     },
     "aspectRatio": {
       "type": "string",
       "default": "4/3",
-      "enum": ["4/3", "4/5"]
+      "enum": [
+        "4/3",
+        "4/5"
+      ]
     },
     "showCategory": {
       "type": "boolean",
