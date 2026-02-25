@@ -1,0 +1,17 @@
+.wp-block-create-block-vh-social-links {
+  .vh-social-links__placeholder {
+    list-style: none;
+    opacity: 0.5;
+    font-style: italic;
+  }
+}
+
+.vh-social-links__inspector-row {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+
+  .components-button.is-destructive {
+    margin-top: 0.25em;
+  }
+}

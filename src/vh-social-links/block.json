@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/vh-social-links",
+  "version": "0.1.0",
+  "title": "VH Social Links",
+  "category": "widgets",
+  "icon": "share",
+  "description": "Display a configurable list of social media links with icons.",
+  "keywords": [
+    "social",
+    "links",
+    "icons",
+    "share",
+    "network"
+  ],
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "links": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "platform": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "blockId": {
+      "type": "string",
+      "default": ""
+    },
+    "customCSS": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "textdomain": "vh-wp-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
