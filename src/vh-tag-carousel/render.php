@@ -1,6 +1,7 @@
 <?php
 $filter_mode      = isset( $attributes['filterMode'] ) ? $attributes['filterMode'] : 'recent';
 $caption_position = isset( $attributes['captionPosition'] ) ? $attributes['captionPosition'] : 'below';
+$aspect_ratio     = isset( $attributes['aspectRatio'] ) ? $attributes['aspectRatio'] : '4/3';
 $tag_ids     = isset( $attributes['tagIds'] ) ? array_map( 'absint', $attributes['tagIds'] ) : array();
 $posts_count = isset( $attributes['postsCount'] ) ? absint( $attributes['postsCount'] ) : 6;
 
@@ -21,7 +22,10 @@ if ( empty( $posts ) ) {
   return;
 }
 
-$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'vh-tag-carousel' ) );
+$wrapper_attributes = get_block_wrapper_attributes( array(
+  'class' => 'vh-tag-carousel',
+  'style' => '--card-aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';',
+) );
 ?>
 <div <?php echo $wrapper_attributes; ?>>
   <div

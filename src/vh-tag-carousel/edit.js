@@ -13,7 +13,7 @@ import {
 import { useSelect } from '@wordpress/data';
 
 export default function Edit( { attributes, setAttributes } ) {
-  const { filterMode, captionPosition, tagIds, postsCount } = attributes;
+  const { filterMode, captionPosition, aspectRatio, tagIds, postsCount } = attributes;
   const tagIdsKey = tagIds.join( ',' );
 
   const { tags, isLoadingTags } = useSelect( ( select ) => {
@@ -49,7 +49,10 @@ export default function Edit( { attributes, setAttributes } ) {
     [ filterMode, tagIdsKey, postsCount ]
   );
 
-  const blockProps = useBlockProps( { className: 'vh-tag-carousel' } );
+  const blockProps = useBlockProps( {
+    className: 'vh-tag-carousel',
+    style: { '--card-aspect-ratio': aspectRatio },
+  } );
 
   const toggleTag = ( tagId, checked ) => {
     setAttributes( {
@@ -80,6 +83,15 @@ export default function Edit( { attributes, setAttributes } ) {
               { label: __( 'Over image', 'vh-wp-blocks' ), value: 'overlay' },
             ] }
             onChange={ ( value ) => setAttributes( { captionPosition: value } ) }
+          />
+          <SelectControl
+            label={ __( 'Aspect ratio', 'vh-wp-blocks' ) }
+            value={ aspectRatio }
+            options={ [
+              { label: __( 'Landscape (4:3)', 'vh-wp-blocks' ), value: '4/3' },
+              { label: __( 'Portrait (3:5)', 'vh-wp-blocks' ), value: '3/5' },
+            ] }
+            onChange={ ( value ) => setAttributes( { aspectRatio: value } ) }
           />
           <RangeControl
             label={ __( 'Number of posts', 'vh-wp-blocks' ) }
