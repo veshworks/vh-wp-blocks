@@ -111,31 +111,24 @@ export default function Edit( { attributes, setAttributes } ) {
 
                 return (
                   <article key={ post.id } className="vh-tag-carousel__card">
-                    <a
-                      className="vh-tag-carousel__card-link"
-                      tabIndex={ -1 }
-                      aria-hidden="true"
-                    >
-                      <div className="vh-tag-carousel__card-thumb">
-                        { imageUrl ? (
-                          <img
-                            src={ imageUrl }
-                            alt={ imageAlt }
-                            className="vh-tag-carousel__card-img"
-                          />
-                        ) : (
-                          <div className="vh-tag-carousel__card-placeholder" />
-                        ) }
-                      </div>
-                    </a>
-                    <div className="vh-tag-carousel__card-body">
-                      <h3 className="vh-tag-carousel__card-title">
-                        <a
-                          dangerouslySetInnerHTML={ {
-                            __html: post.title.rendered,
-                          } }
+                    <div className="vh-tag-carousel__card-thumb">
+                      { imageUrl ? (
+                        <img
+                          src={ imageUrl }
+                          alt={ imageAlt }
+                          className="vh-tag-carousel__card-img"
                         />
-                      </h3>
+                      ) : (
+                        <div className="vh-tag-carousel__card-placeholder" />
+                      ) }
+                    </div>
+                    <div className="vh-tag-carousel__card-body">
+                      <h3
+                        className="vh-tag-carousel__card-title"
+                        dangerouslySetInnerHTML={ {
+                          __html: post.title.rendered,
+                        } }
+                      />
                       <time className="vh-tag-carousel__card-date">
                         { formattedDate }
                       </time>

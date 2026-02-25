@@ -4,3 +4,4 @@
 - you can check the final build of the vh-category-section in http://localhost:8888/?page_id=9
 - when naming css classes, follow the BEM pattern
 - avoid setting font-families and colors, allow the user's selected wp theme choose most of it, so rely on inheritance and default styling as much as you can
+- when creating editor version of blocks, never include `<a>` tags, as they take the user out of the editor when clicking them and it's a bad experience
