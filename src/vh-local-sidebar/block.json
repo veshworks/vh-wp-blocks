@@ -20,6 +20,10 @@
     "sidebarWidth": {
       "type": "string",
       "default": "33%"
+    },
+    "columnsTemplate": {
+      "type": "string",
+      "default": ""
     }
   },
   "textdomain": "vh-wp-blocks",
