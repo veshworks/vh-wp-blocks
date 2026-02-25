@@ -81,6 +81,34 @@
       padding-block-start: 1rem;
     }
 
+    &--overlay {
+      display: grid;
+
+      > .vh-tag-carousel__card-link,
+      > .vh-tag-carousel__card-thumb,
+      > .vh-tag-carousel__card-body {
+        grid-area: 1 / 1;
+      }
+
+      > .vh-tag-carousel__card-body {
+        align-self: end;
+        padding: 2rem 1rem 0.75rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
+        color: #fff;
+        border-radius: 0 0 4px 4px;
+        z-index: 1;
+        padding-block-start: 2rem;
+      }
+
+      .vh-tag-carousel__card-title a {
+        color: #fff;
+      }
+
+      .vh-tag-carousel__card-date {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
     &-date {
       display: block;
       font-size: 13px;

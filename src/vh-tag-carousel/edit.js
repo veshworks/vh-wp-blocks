@@ -7,12 +7,13 @@ import {
   CheckboxControl,
   RadioControl,
   RangeControl,
+  SelectControl,
   Spinner,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
 export default function Edit( { attributes, setAttributes } ) {
-  const { filterMode, tagIds, postsCount } = attributes;
+  const { filterMode, captionPosition, tagIds, postsCount } = attributes;
   const tagIdsKey = tagIds.join( ',' );
 
   const { tags, isLoadingTags } = useSelect( ( select ) => {
@@ -71,6 +72,15 @@ export default function Edit( { attributes, setAttributes } ) {
             ] }
             onChange={ ( value ) => setAttributes( { filterMode: value } ) }
           />
+          <SelectControl
+            label={ __( 'Caption position', 'vh-wp-blocks' ) }
+            value={ captionPosition }
+            options={ [
+              { label: __( 'Below image', 'vh-wp-blocks' ), value: 'below' },
+              { label: __( 'Over image', 'vh-wp-blocks' ), value: 'overlay' },
+            ] }
+            onChange={ ( value ) => setAttributes( { captionPosition: value } ) }
+          />
           <RangeControl
             label={ __( 'Number of posts', 'vh-wp-blocks' ) }
             value={ postsCount }
@@ -122,7 +132,10 @@ export default function Edit( { attributes, setAttributes } ) {
                 } );
 
                 return (
-                  <article key={ post.id } className="vh-tag-carousel__card">
+                  <article
+                    key={ post.id }
+                    className={ `vh-tag-carousel__card${ captionPosition === 'overlay' ? ' vh-tag-carousel__card--overlay' : '' }` }
+                  >
                     <div className="vh-tag-carousel__card-thumb">
                       { imageUrl ? (
                         <img

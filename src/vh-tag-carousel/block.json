@@ -26,6 +26,11 @@
       "default": "recent",
       "enum": ["recent", "tag"]
     },
+    "captionPosition": {
+      "type": "string",
+      "default": "below",
+      "enum": ["below", "overlay"]
+    },
     "tagIds": {
       "type": "array",
       "items": {

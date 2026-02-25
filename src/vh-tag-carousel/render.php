@@ -1,5 +1,6 @@
 <?php
-$filter_mode = isset( $attributes['filterMode'] ) ? $attributes['filterMode'] : 'recent';
+$filter_mode      = isset( $attributes['filterMode'] ) ? $attributes['filterMode'] : 'recent';
+$caption_position = isset( $attributes['captionPosition'] ) ? $attributes['captionPosition'] : 'below';
 $tag_ids     = isset( $attributes['tagIds'] ) ? array_map( 'absint', $attributes['tagIds'] ) : array();
 $posts_count = isset( $attributes['postsCount'] ) ? absint( $attributes['postsCount'] ) : 6;
 
@@ -37,7 +38,7 @@ $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'vh-tag-ca
         $date_fmt  = get_the_date( 'M j, Y', $post );
         $permalink = get_permalink( $post->ID );
       ?>
-      <article class="vh-tag-carousel__card">
+      <article class="vh-tag-carousel__card<?php echo 'overlay' === $caption_position ? ' vh-tag-carousel__card--overlay' : ''; ?>">
         <a
           href="<?php echo esc_url( $permalink ); ?>"
           class="vh-tag-carousel__card-link"
