@@ -1,7 +1,9 @@
 .vh-tag-carousel {
+  --min-items: 1;
   position: relative;
   display: flex;
   contain: inline-size;
+  container-type: inline-size;
 
   &__viewport {
     flex: 1;
@@ -23,16 +25,8 @@
   }
 
   &__card {
-    flex: 0 0 min(78vw, 260px);
+    flex: 0 0 min(calc(100cqi / var(--min-items)), 320px);
     scroll-snap-align: start;
-
-    @media (min-width: 640px) {
-      flex: 0 0 300px;
-    }
-
-    @media (min-width: 1024px) {
-      flex: 0 0 320px;
-    }
 
     &-link {
       display: block;
