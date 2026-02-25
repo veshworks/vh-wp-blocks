@@ -36,6 +36,10 @@
       "default": "4/3",
       "enum": ["4/3", "4/5"]
     },
+    "showCategory": {
+      "type": "boolean",
+      "default": false
+    },
     "tagIds": {
       "type": "array",
       "items": {

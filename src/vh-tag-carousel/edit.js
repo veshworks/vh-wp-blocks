@@ -9,11 +9,12 @@ import {
   RangeControl,
   SelectControl,
   Spinner,
+  ToggleControl,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
 export default function Edit( { attributes, setAttributes } ) {
-  const { filterMode, captionPosition, aspectRatio, tagIds, postsCount } = attributes;
+  const { filterMode, captionPosition, aspectRatio, showCategory, tagIds, postsCount } = attributes;
   const tagIdsKey = tagIds.join( ',' );
 
   const { tags, isLoadingTags } = useSelect( ( select ) => {
@@ -93,6 +94,11 @@ export default function Edit( { attributes, setAttributes } ) {
             ] }
             onChange={ ( value ) => setAttributes( { aspectRatio: value } ) }
           />
+          <ToggleControl
+            label={ __( 'Show category', 'vh-wp-blocks' ) }
+            checked={ showCategory }
+            onChange={ ( value ) => setAttributes( { showCategory: value } ) }
+          />
           <RangeControl
             label={ __( 'Number of posts', 'vh-wp-blocks' ) }
             value={ postsCount }
@@ -136,6 +142,8 @@ export default function Edit( { attributes, setAttributes } ) {
                   media?.media_details?.sizes?.medium?.source_url ||
                   media?.source_url;
                 const imageAlt = media?.alt_text || '';
+                const category =
+                  post._embedded?.[ 'wp:term' ]?.[ 0 ]?.[ 0 ]?.name || '';
                 const date = new Date( post.date );
                 const formattedDate = date.toLocaleDateString( 'en-US', {
                   year: 'numeric',
@@ -160,6 +168,11 @@ export default function Edit( { attributes, setAttributes } ) {
                       ) }
                     </div>
                     <div className="vh-tag-carousel__card-body">
+                      { showCategory && category && (
+                        <span className="vh-tag-carousel__card-category">
+                          { category }
+                        </span>
+                      ) }
                       <h3
                         className="vh-tag-carousel__card-title"
                         dangerouslySetInnerHTML={ {

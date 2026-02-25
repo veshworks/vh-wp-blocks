@@ -2,7 +2,8 @@
 $filter_mode      = isset( $attributes['filterMode'] ) ? $attributes['filterMode'] : 'recent';
 $caption_position = isset( $attributes['captionPosition'] ) ? $attributes['captionPosition'] : 'below';
 $aspect_ratio     = isset( $attributes['aspectRatio'] ) ? $attributes['aspectRatio'] : '4/3';
-$tag_ids     = isset( $attributes['tagIds'] ) ? array_map( 'absint', $attributes['tagIds'] ) : array();
+$show_category = ! empty( $attributes['showCategory'] );
+$tag_ids       = isset( $attributes['tagIds'] ) ? array_map( 'absint', $attributes['tagIds'] ) : array();
 $posts_count = isset( $attributes['postsCount'] ) ? absint( $attributes['postsCount'] ) : 6;
 
 $query_args = array(
@@ -38,9 +39,11 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
         $thumb_id  = get_post_thumbnail_id( $post->ID );
         $thumb_url = $thumb_id ? wp_get_attachment_image_url( $thumb_id, 'large' ) : '';
         $thumb_alt = $thumb_id ? get_post_meta( $thumb_id, '_wp_attachment_image_alt', true ) : '';
-        $date_iso  = get_the_date( 'c', $post );
-        $date_fmt  = get_the_date( 'M j, Y', $post );
-        $permalink = get_permalink( $post->ID );
+        $date_iso   = get_the_date( 'c', $post );
+        $date_fmt   = get_the_date( 'M j, Y', $post );
+        $permalink  = get_permalink( $post->ID );
+        $categories = $show_category ? get_the_category( $post->ID ) : array();
+        $category   = ! empty( $categories ) ? $categories[0] : null;
       ?>
       <article class="vh-tag-carousel__card<?php echo 'overlay' === $caption_position ? ' vh-tag-carousel__card--overlay' : ''; ?>">
         <a
@@ -64,6 +67,11 @@ $wrapper_attributes = get_block_wrapper_attributes( array(
           </div>
         </a>
         <div class="vh-tag-carousel__card-body">
+          <?php if ( $show_category && $category ) : ?>
+            <span class="vh-tag-carousel__card-category">
+              <?php echo esc_html( $category->name ); ?>
+            </span>
+          <?php endif; ?>
           <h3 class="vh-tag-carousel__card-title">
             <a href="<?php echo esc_url( $permalink ); ?>">
               <?php echo esc_html( get_the_title( $post ) ); ?>
