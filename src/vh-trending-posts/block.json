@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/vh-trending-posts",
+  "version": "0.1.14",
+  "title": "VH Trending Posts",
+  "category": "widgets",
+  "icon": "chart-bar",
+  "description": "Display trending posts based on WP Popular Posts, comment count, or recency.",
+  "keywords": [
+    "trending",
+    "popular",
+    "posts"
+  ],
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "postsCount": {
+      "type": "integer",
+      "default": 5
+    },
+    "timeRange": {
+      "type": "string",
+      "default": "7d",
+      "enum": ["24h", "7d", "30d", "all"]
+    },
+    "blockId": {
+      "type": "string",
+      "default": ""
+    },
+    "customCSS": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "textdomain": "vh-wp-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

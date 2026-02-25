@@ -1,0 +1,14 @@
+.editor-styles-wrapper .wp-block-create-block-vh-trending-posts {
+  .vh-trending-posts {
+    &__featured {
+      &-link {
+        // Disable pointer cursor in editor — no navigation on click
+        cursor: default;
+      }
+    }
+
+    &__item-thumb-link {
+      cursor: default;
+    }
+  }
+}
