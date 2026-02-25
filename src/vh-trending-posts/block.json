@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "create-block/vh-trending-posts",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "title": "VH Trending Posts",
   "category": "widgets",
   "icon": "chart-bar",
@@ -27,7 +27,12 @@
     "timeRange": {
       "type": "string",
       "default": "7d",
-      "enum": ["24h", "7d", "30d", "all"]
+      "enum": [
+        "24h",
+        "7d",
+        "30d",
+        "all"
+      ]
     },
     "blockId": {
       "type": "string",

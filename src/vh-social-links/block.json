@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "create-block/vh-social-links",
-  "version": "0.1.0",
+  "version": "0.1.15",
   "title": "VH Social Links",
   "category": "widgets",
   "icon": "share",
@@ -24,9 +24,15 @@
       "items": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "platform": { "type": "string" },
-          "url": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
         }
       }
     },
