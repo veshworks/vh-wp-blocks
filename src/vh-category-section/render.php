@@ -81,7 +81,10 @@ $chevron_svg        = file_get_contents( __DIR__ . '/assets/chevron-right.svg' )
     ?>
     <article class="vh-category-section__article">
       <?php if ( $thumb_url ) : ?>
-        <a href="<?php echo esc_url( $permalink ); ?>">
+        <a
+          href="<?php echo esc_url( $permalink ); ?>"
+          class="vh-category-section__thumb-link"
+        >
           <img
             src="<?php echo esc_url( $thumb_url ); ?>"
             alt="<?php echo esc_attr( $title ); ?>"
