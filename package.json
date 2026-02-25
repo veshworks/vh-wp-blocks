@@ -1,6 +1,6 @@
 {
   "name": "vh-wp-blocks",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "A collection of custom Gutenberg blocks for editorial and content-rich WordPress sites.",
   "author": "vhoyer",
   "license": "GPL-2.0-or-later",
