@@ -72,7 +72,7 @@ $chevron_svg        = file_get_contents( __DIR__ . '/assets/chevron-right.svg' )
       $excerpt   = $post->post_excerpt
         ? $post->post_excerpt
         : wp_trim_words( wp_strip_all_tags( $post->post_content ), 55 );
-      $date      = get_the_date( 'M j, Y', $post_id );
+      $date      = get_the_date( '', $post_id );
       $date_iso  = get_the_date( 'c', $post_id );
       $thumb_id  = get_post_thumbnail_id( $post_id );
       $thumb_url = $thumb_id
