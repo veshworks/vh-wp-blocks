@@ -1,6 +1,7 @@
 .vh-tag-carousel {
   position: relative;
   display: flex;
+  contain: inline-size;
 
   &__viewport {
     flex: 1;
@@ -44,6 +45,7 @@
       overflow: hidden;
       background-color: #ece7e0;
       border-radius: 4px;
+      object-fit: cover;
     }
 
     &-img {
