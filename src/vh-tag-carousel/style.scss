@@ -93,11 +93,11 @@
       > .vh-tag-carousel__card-body {
         align-self: end;
         padding: 2rem 1rem 0.75rem;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.65) 40%, transparent 100%);
         color: #fff;
         border-radius: 0 0 4px 4px;
         z-index: 1;
-        padding-block-start: 2rem;
+        padding-block-start: 6rem;
       }
 
       .vh-tag-carousel__card-title a {
