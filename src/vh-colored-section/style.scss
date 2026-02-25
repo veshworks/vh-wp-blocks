@@ -6,7 +6,7 @@
   &::before {
     content: '';
     display: block;
-    background-color: #f8f9fa;
+    background-color: var(--vh-section-bg, #f8f9fa);
     width: 100vw;
     left: 50%;
     top: 0;

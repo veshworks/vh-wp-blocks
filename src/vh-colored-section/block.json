@@ -7,6 +7,12 @@
   "category": "design",
   "icon": "color-picker",
   "description": "A section wrapper with a customizable background color.",
+  "attributes": {
+    "backgroundColor": {
+      "type": "string",
+      "default": "#f8f9fa"
+    }
+  },
   "supports": {
     "html": false,
     "align": [
