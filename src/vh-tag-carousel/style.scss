@@ -1,5 +1,4 @@
 .vh-tag-carousel {
-  --min-items: 1;
   position: relative;
   display: flex;
   contain: inline-size;
@@ -13,6 +12,25 @@
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
 
+    --gap: 16px;
+    --min-items: 1;
+
+    @container (min-width: 370px) {
+      --min-items: 1.25;
+    }
+
+    @container (min-width: 500px) {
+      --min-items: 2.25;
+    }
+
+    @container (min-width: 700px) {
+      --min-items: 3.25;
+    }
+
+    @container (min-width: 900px) {
+      --min-items: 4.25;
+    }
+
     &::-webkit-scrollbar {
       display: none;
     }
@@ -20,13 +38,17 @@
 
   &__track {
     display: flex;
-    gap: 1.25rem;
-    padding: 0.75rem 1.25rem 1.5rem;
+    gap: var(--gap);
+    padding: 0.75rem var(--gap) 1.5rem;
   }
 
   &__card {
-    flex: 0 0 min(calc(100cqi / var(--min-items)), 320px);
     scroll-snap-align: start;
+    flex: 0 0 min(calc(100cqi / (var(--min-items))), 400px);
+
+    @supports (width: round(1px, 1px)) {
+      flex: 0 0 min(calc((100cqi - round(down, var(--min-items) - 1, 1) * var(--gap)) / (var(--min-items))), 400px);
+    }
 
     &-link {
       display: block;
